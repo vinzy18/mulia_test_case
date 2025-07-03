@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
     public function index()
     {
 		if ($this->session->userdata('logged_in')) {
-			redirect('welcome');
+			redirect('dashboard');
 		}
 
 		$this->load->view('login');
@@ -32,7 +32,7 @@ class Auth extends CI_Controller {
                 'username' => $user->username,
                 'fullname' => $user->fullname,
             ]);	
-            redirect('welcome');
+            redirect('dashboard');
         } else {
             $this->session->set_flashdata('error', "Credential doesn't match");
             redirect('auth');
