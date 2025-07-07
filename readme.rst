@@ -1,3 +1,21 @@
+#################################
+Technical Test PT. Mulia Industri
+#################################
+
+************************
+Installation Information
+************************
+- Run initial_db_mulia_test.sql di DBMS
+- Configure database.php
+- max_allowed_packet jadi 64M karena saya menggunakan base64 pada image
+
+************************
+Gap Analysis Information
+************************
+- Fitur untuk export excel
+- Dashboard
+Mohon maaf🙏
+
 ###################
 What is CodeIgniter
 ###################
