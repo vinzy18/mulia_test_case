@@ -100,15 +100,12 @@ class User extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE) {
 
-			$is_vendor = $this->input->post('is_vendor', TRUE) ? 1 : NULL;
-
 			 $data = [
                 'fullname'  => $this->input->post('fullname', TRUE),
                 'email' => $this->input->post('email', TRUE),
                 'username' => $this->input->post('username', TRUE),
                 'password' => password_hash($this->input->post('password', TRUE), PASSWORD_DEFAULT),
                 'role_id' => $this->input->post('role_id', TRUE),
-                'is_vendor' => $is_vendor,
             ];
 
             if ($this->user->insert($data)) {

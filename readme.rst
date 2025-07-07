@@ -8,6 +8,10 @@ Installation Information
 - Run initial_db_mulia_test.sql di DBMS
 - Configure database.php
 - max_allowed_packet jadi 64M karena saya menggunakan base64 pada image
+- untuk user hanya ada user superadmin yang bisa create user dengan role id
+- Role ID 1: Super Admin
+- Role ID 2: Admin PT. Mulia Industri
+- Role ID 3: User 
 
 ************************
 Gap Analysis Information

@@ -63,10 +63,6 @@
 								<label class="form-label" for="password">Password <span class="text-danger">*</span></label>
 								<input name="password" type="password" class="form-control" id="password" placeholder="Enter Password"></input>
 							</div>
-							<div class="mb-3 form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="is_vendor" name="is_vendor">
-								<label class="form-check-label" for="is_vendor">Is Vendor?</label>
-							</div>
 						</div>
 						<div class="col-md-6 mb-4">
 							<button class="btn btn-sm btn-success" type="submit">Submit</button>
