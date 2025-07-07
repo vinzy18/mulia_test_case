@@ -13,7 +13,11 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            {content}
+			<div id="content">
+				{topbar}
+				
+				{content}
+			</div>
             <!-- End of Main Content -->
 
             <!-- Footer -->

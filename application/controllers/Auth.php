@@ -26,11 +26,15 @@ class Auth extends CI_Controller {
         $user = $this->auth->checkCredential($username, $password);
 
         if ($user) {
+			$vendor_id = $this->db->get_where('vendor', ['user_id' => $user->id])->row()->id ?? null;
+
             $this->session->set_userdata([
                 'logged_in' => true,
-                'user_id' => $user->id,
-                'username' => $user->username,
-                'fullname' => $user->fullname,
+                'user_id' 	=> $user->id,
+                'vendor_id' => $vendor_id,
+                'username' 	=> $user->username,
+                'fullname' 	=> $user->fullname,
+                'role_id' 	=> $user->role_id,
             ]);	
             redirect('dashboard');
         } else {

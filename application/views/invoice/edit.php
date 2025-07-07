@@ -24,16 +24,17 @@
 				</div>
 			<?php endif; ?>
 			<div class="invoice-form rounded-control">
-				<form action="<?= site_url('invoice/store') ?>" method="post" id="invoice-form" enctype="multipart/form-data">
+				<form action="<?= site_url('invoice/update') ?>" method="post" id="invoice-form">
 					<div class="row mb-3">
 						<div class="col-md-6 mb-4">
 							<div class="mb-3">
 								<label class="form-label" for="vendor_code">Invoice Number</label>
-								<input class="form-control" placeholder="Invoice Number will be genereting automatically" type="text" name="inv_number" id="inv_number" readonly>
+								<input class="form-control" type="text" name="inv_number" id="inv_number" value="<?= $invoice->inv_number ?>" readonly>
+								<input type="hidden" name="inv_id" id="inv_id" value="<?= $invoice->id ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label" for="period">Period <span class="text-danger">*</span></label>
-								<input class="form-control required" placeholder="Enter Period" type="month" name="period" id="period" max="<?= date('Y-m') ?>" required>
+								<input class="form-control required" placeholder="Enter Period" type="month" name="period" id="period" max="<?= date('Y-m') ?>" value="<?= date('Y-m', strtotime($invoice->period . '-01')) ?>" required readonly>
 							</div>
 						</div>
 						<div class="col-md-6 mb-4">
@@ -44,7 +45,7 @@
 							</div>
 							<div class="mb-3">
 								<label class="form-label" for="post_date">Post Date <span class="text-danger">*</span></label>
-								<input class="form-control required" placeholder="Post Date" type="date" name="post_date" id="post_date" max="<?= date('Y-m-d') ?>" required>
+								<input class="form-control required" placeholder="Post Date" type="date" name="post_date" id="post_date" max="<?= date('Y-m-d') ?>" value="<?= date($invoice->post_date) ?>" required readonly>
 							</div> 
 						</div>
 					</div>
@@ -65,23 +66,26 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="text" name="item_name[]" class="form-control required" required></td>
-										<td><input type="number" min="0" name="quantity[]" class="form-control required quantity" required></td>
+									<?php foreach($items as $item): ?>
+									<tr id="item_<?= $item->id ?>">
+										<input type="hidden" name="item_id[]" value="<?= $item->id ?>">
+										<td><input type="text" name="item_name_old[]" class="form-control required" value="<?= $item->item_name ?>" required></td>
+										<td><input type="number" min="0" name="quantity_old[]" class="form-control required quantity" value="<?= $item->quantity ?>" required></td>
 										<td>
 											<div class="input-group value">
-													<span class="input-group-text">Rp.</span>
-													<input type="number" min="0" name="price[]" class="form-control required price" required></td>
+												<span class="input-group-text">Rp.</span>
+												<input type="number" min="0" name="price_old[]" class="form-control required price" value="<?= $item->price ?>" required></td>
 											</div>
 										</td>
 										<td>
 											<div class="input-group value">
-													<span class="input-group-text">Rp.</span>
-													<input type="number" name="total[]" class="form-control required total" readonly></td>
+												<span class="input-group-text">Rp.</span>
+												<input type="number" name="total_old[]" class="form-control required total" value="<?= $item->total ?>" readonly></td>
 											</div>
 										</td>
-										<td class="text-center"><button type="button" class="btn btn-danger btn-sm btn-remove"><i class="fas fa-solid fa-trash"></i></button></td>
+										<td class="text-center"><button type="button" class="btn btn-danger btn-sm btn-remove" data-item_id="<?= $item->id ?>"><i class="fas fa-solid fa-trash"></i></button></td>
 									</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 							<button type="button" id="add-row" class="btn btn-primary btn-sm">Add Item</button>
@@ -109,13 +113,15 @@
 
 					</div>
 
-					<div class="col-6 input-group mb-3">
-						<label class="input-group-text" for="attachment">Upload Attachment</label>
-						<input type="file" accept="image/*" class="form-control" id="attachment" name="attachment" required>
-					</div>
+					<?php if ($attachment): ?>
+						<div class="mb-5">
+							<h5>Attachment</h5>
+							<img src="<?= $attachment->attachment_img ?>" width="300">
+						</div>
+					<?php endif; ?>
 					
 					<div class="col-md-6 mb-4">
-						<button class="btn btn-sm btn-success" type="button" id="submit-invoice">Submit Invoice</button>
+						<button class="btn btn-sm btn-success" type="button" id="submit-invoice">Update Invoice</button>
 					</div>
 				</form>
 			</div>

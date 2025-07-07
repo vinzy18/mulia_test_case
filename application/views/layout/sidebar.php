@@ -2,11 +2,8 @@
 <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('dashboard') ?>">
-		<div class="sidebar-brand-icon rotate-n-15">
-			<i class="fas fa-laugh-wink"></i>
-		</div>
-		<div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+	<a class="sidebar-brand d-flex align-items-center justify-content-center m-3" href="<?= site_url('dashboard') ?>">
+		<img src="<?= base_url('assets'); ?>/img/logo.png" alt="">
 	</a>
 
 	<!-- Divider -->
@@ -36,12 +33,15 @@
 		</a>
 		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="buttons.html">Create new invoice</a>
-				<a class="collapse-item" href="cards.html">Invoices</a>
+				<?php if ($this->session->userdata('role_id') != 2): ?>
+					<a class="collapse-item" href="<?= site_url('invoice/create') ?>">Create new invoice</a>
+				<?php endif; ?>
+				<a class="collapse-item" href="<?= site_url('invoice') ?>">Invoices</a>
 			</div>
 		</div>
 	</li>
 
+	<?php if ($this->session->userdata('role_id') == 1): ?>
 	<!-- Divider -->
 	<hr class="sidebar-divider">
 
@@ -52,7 +52,7 @@
 
 	<!-- Nav Item - Vendors -->
 	<li class="nav-item">
-		<a class="nav-link" href="charts.html">
+		<a class="nav-link" href="<?= site_url('vendor') ?>">
 			<i class="fas fa-fw fa-chart-area"></i>
 			<span>Vendors</span></a>
 	</li>
@@ -63,6 +63,7 @@
 			<i class="fas fa-fw fa-table"></i>
 			<span>Users</span></a>
 	</li>
+	<?php endif; ?>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">

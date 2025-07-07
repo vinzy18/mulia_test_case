@@ -1,12 +1,12 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
                         
-class User_model extends CI_Model 
+class Item_model extends CI_Model 
 {
-	private $table = 'users';
-	private $column_order = array(null, 'id', 'fullname', 'username', 'email'); 
-	private $column_search = array('fullname', 'username', 'email'); 
-	private $order = array('fullname' => 'asc'); 
+    private $table = 'items';
+	private $column_order = array(null, 'id', 'inv_number', 'item_name', 'qty', 'price', 'total', 'created_at'); 
+	private $column_search = array('inv_number', 'item_name', 'qty', 'price', 'total', 'created_at'); 
+	private $order = array('item_name' => 'asc'); 
 
 	private function _get_datatables_query()
 	{
@@ -54,18 +54,39 @@ class User_model extends CI_Model
 	{
 		$this->db->from($this->table);
 		return $this->db->count_all_results();
-	}
+	}       
 	
-	public function getUser($id)
+	public function getItemById($id)
 	{
-		return $this->db->get_where('users', ['id' => $id])->row();
+		return $this->db->get_where($this->table, ['id' => $id])->row();
+	}
+
+	public function getItemsByInvoiceId($id)
+	{
+		return $this->db->get_where($this->table, ['inv_id' => $id])->result();
 	}
              
 	public function insert($data)
     {
-        return $this->db->insert('users', $data);
-    }
+        return $this->db->insert('items', $data);
+    }  
+	
+	public function update($id, $data){
+		$this->db->where('id', $id);
+		return $this->db->update($this->table, $data);
+	}
+
+	public function remove($id){
+		$this->db->where('id', $id);
+		$this->db->delete('items');
+	}
+
+	public function removeByInvoiceId($id){
+		$this->db->where('inv_id', $id);
+		$this->db->delete('items');
+	}
+                        
 }
 
 
-/* End of file User_model.php and path \application\models\User_model.php */
+/* End of file Item_model.php and path \application\models\Item_model.php */

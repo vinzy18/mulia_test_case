@@ -35,7 +35,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
 									<div class="mb-3 text-center">
-										<img src="assets/img/logo.png" alt="">
+										<img src="<?= base_url('assets'); ?>/img/logo.png" alt="">
 									</div>
 									<div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Mulia Industry Billing System</h1>

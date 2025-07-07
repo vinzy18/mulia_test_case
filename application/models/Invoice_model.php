@@ -1,16 +1,26 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
                         
-class User_model extends CI_Model 
+class Invoice_model extends CI_Model 
 {
-	private $table = 'users';
-	private $column_order = array(null, 'id', 'fullname', 'username', 'email'); 
-	private $column_search = array('fullname', 'username', 'email'); 
-	private $order = array('fullname' => 'asc'); 
+    private $table = 'invoice';
+	private $column_order = array(null, 'id', 'inv_number', 'vendor_name ', 'period', 'post_date', 'status', 'total_qty', 'total_cost', 'is_confirmed'); 
+	private $column_search = array('inv_number', 'vendor_name ', 'period', 'post_date', 'status', 'total_qty', 'total_cost', 'is_confirmed'); 
+	private $order = array('id' => 'desc'); 
 
 	private function _get_datatables_query()
 	{
 		$this->db->from($this->table);
+
+		$CI =& get_instance();
+		$role_id = $CI->session->userdata('role_id');
+		$vendor_id = $CI->session->userdata('vendor_id');
+
+		if ($role_id == 3) {
+			$this->db->where('vendor_id', $vendor_id);
+		} else if($role_id == 2) {
+			$this->db->where('is_confirmed', 1);
+		}
 
 		$i = 0;
 		foreach ($this->column_search as $item) {
@@ -56,16 +66,29 @@ class User_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 	
-	public function getUser($id)
+	public function getInvoice($id)
 	{
-		return $this->db->get_where('users', ['id' => $id])->row();
+		return $this->db->get_where('invoice', ['id' => $id])->row();
 	}
              
 	public function insert($data)
     {
-        return $this->db->insert('users', $data);
-    }
+		$this->db->insert('invoice', $data);
+        return $this->db->insert_id();
+    }         
+
+	public function update($id, $data)
+	{
+		$this->db->where('id', $id);
+		return $this->db->update($this->table, $data);
+	}               
+
+	public function remove($id){
+		$this->db->where('id', $id);
+		return $this->db->delete('invoice');
+	}        
+	
 }
 
 
-/* End of file User_model.php and path \application\models\User_model.php */
+/* End of file Invoice_model.php and path \application\models\Invoice_model.php */
