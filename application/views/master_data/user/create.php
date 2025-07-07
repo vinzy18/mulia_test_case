@@ -49,7 +49,9 @@
 								<select class="form-control" name="role_id" id="role_id">
 									<option value="" selected></option>
 									<?php foreach($roles as $role): ?>
-										<option value="<?= $role->id ?>"><?= $role->name ?></option>
+										<?php if($role->id != 3):  ?>
+											<option value="<?= $role->id ?>"><?= $role->name ?></option>
+										<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
 							</div>
